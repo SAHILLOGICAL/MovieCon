@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
 
+// Define a color palette
+const colors = {
+  primary: '#d24dff',   // Purple
+  background: 'black',
+  text: 'white',
+  inputBorder: 'gray',
+  inputBackground: '#202020',
+  buttonBackground: '#202020',
+  buttonTextColor: 'white',
+  movieItemBorder: 'white',
+};
+
 const SearchNavigator = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [movies, setMovies] = useState([]);
@@ -23,25 +35,29 @@ const SearchNavigator = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: colors.text, borderColor: colors.inputBorder, backgroundColor: colors.inputBackground }]}
         placeholder="Search for a movie..."
         onChangeText={(text) => setSearchQuery(text)}
         value={searchQuery}
       />
-      <Button title="Search" onPress={searchMovies} />
+      <Button
+        title="Search"
+        onPress={searchMovies}
+        color={colors.buttonBackground}
+      />
       {isLoading ? (
-        <ActivityIndicator size="large" color="blue" style={styles.loadingIndicator} />
+        <ActivityIndicator size="large" color={colors.primary} style={styles.loadingIndicator} />
       ) : (
         <FlatList
           data={movies}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <View style={styles.movieItem}>
-              <Text style={styles.title}>{item.title}</Text>
-              <Text>Release Date: {item.release_date}</Text>
-              <Text>Rating: {item.vote_average}</Text>
+            <View style={[styles.movieItem, { borderColor: colors.movieItemBorder }]}>
+              <Text style={[styles.title, { color: colors.text }]}>{item.title}</Text>
+              <Text style={{ color: colors.text }}>Release Date: {item.release_date}</Text>
+              <Text style={{ color: colors.text }}>Rating: {item.vote_average}</Text>
               {/* You can display more details about each movie */}
             </View>
           )}
@@ -56,31 +72,26 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'black',
-    paddingHorizontal: 20,
   },
   input: {
-    height: 40,
-    width: '100%',
-    borderColor: 'gray',
-    borderWidth: 1,
+    height: 100,
+    width: '80%', // Adjust the width as needed
+    borderWidth: 10,
+    borderColor: 'purple',
     marginBottom: 10,
     paddingHorizontal: 10,
-    color: 'white',
   },
   loadingIndicator: {
     marginTop: 20,
   },
   movieItem: {
     marginBottom: 10,
-    borderColor: 'white',
     borderWidth: 1,
     padding: 10,
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'white',
   },
 });
 
