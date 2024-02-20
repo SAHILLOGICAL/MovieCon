@@ -185,7 +185,7 @@ const Home = ({ navigation }) => {
               onPress={() => {
                 setPage((prev) => prev + 1);
                 scroll.current.scrollToOffset({
-                  offest: 0,
+                  offset: 0,
                   animated: true,
                 });
               }}
